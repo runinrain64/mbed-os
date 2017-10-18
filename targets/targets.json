@@ -1598,6 +1598,7 @@
   },
   "SENSATION_L476VG": {
     "inherits": [ "DISCO_L476VG" ],
+    "macros_add": ["USB_STM_HAL"],
     "overrides": {
       "clock_source": "USE_PLL_HSE_XTAL"
     }
