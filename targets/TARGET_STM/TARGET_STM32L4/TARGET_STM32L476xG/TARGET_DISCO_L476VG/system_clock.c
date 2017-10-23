@@ -211,6 +211,19 @@ uint8_t SetSysClock_PLL_HSE(uint8_t bypass)
         return 0; // FAIL
     }
 
+		// Configure LPUART Clock Source
+	RCC_PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LPUART1;
+	/*
+		- RCC_LPUART1CLKSOURCE_PCLK1: 48MHz
+		- RCC_LPUART1CLKSOURCE_SYSCLK: 48MHz or 80Mhz
+		- RCC_LPUART1CLKSOURCE_HSI
+		- RCC_LPUART1CLKSOURCE_LSE: 32.768Mhz
+	*/
+	RCC_PeriphClkInit.Lpuart1ClockSelection = RCC_LPUART1CLKSOURCE_LSE;
+	if (HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphClkInit) != HAL_OK) {
+		return 0; // FAIL
+	}
+
     // Disable MSI Oscillator
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
     RCC_OscInitStruct.MSIState       = RCC_MSI_OFF;

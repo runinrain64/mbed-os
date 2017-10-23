@@ -235,12 +235,12 @@ HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)
   if(huart->Init.HwFlowCtl != UART_HWCONTROL_NONE)
   {
     /* Check the parameters */
-    assert_param(IS_UART_HWFLOW_INSTANCE(huart->Instance));
+	assert_param(IS_UART_HWFLOW_INSTANCE(huart->Instance));
   }
   else
   {
     /* Check the parameters */
-    assert_param((IS_UART_INSTANCE(huart->Instance)) || (IS_LPUART_INSTANCE(huart->Instance)));
+	assert_param((IS_UART_INSTANCE(huart->Instance)) || (IS_LPUART_INSTANCE(huart->Instance)));
   }
 
   if(huart->gState == HAL_UART_STATE_RESET)
@@ -249,7 +249,7 @@ HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)
     huart->Lock = HAL_UNLOCKED;
 
     /* Init the low level hardware : GPIO, CLOCK */
-    HAL_UART_MspInit(huart);
+		HAL_UART_MspInit(huart);
   }
 
   huart->gState = HAL_UART_STATE_BUSY;
@@ -260,7 +260,7 @@ HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)
   /* Set the UART Communication parameters */
   if (UART_SetConfig(huart) == HAL_ERROR)
   {
-    return HAL_ERROR;
+		  return HAL_ERROR;
   }
 
   if (huart->AdvancedInit.AdvFeatureInit != UART_ADVFEATURE_NO_INIT)
@@ -2085,19 +2085,25 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
     switch (clocksource)
     {
     case UART_CLOCKSOURCE_PCLK1:
-      tmpreg = HAL_RCC_GetPCLK1Freq();
+		/**/
+//		error("1");
+		tmpreg = HAL_RCC_GetPCLK1Freq();
       break;
     case UART_CLOCKSOURCE_HSI:
-      tmpreg = (uint32_t) HSI_VALUE;
+//		error("2");
+		tmpreg = (uint32_t) HSI_VALUE;
       break;
     case UART_CLOCKSOURCE_SYSCLK:
-      tmpreg = HAL_RCC_GetSysClockFreq();
+//		error("3");
+		tmpreg = HAL_RCC_GetSysClockFreq();
       break;
     case UART_CLOCKSOURCE_LSE:
-      tmpreg = (uint32_t) LSE_VALUE;
+//		error("4");
+		tmpreg = (uint32_t) LSE_VALUE;
       break;
     case UART_CLOCKSOURCE_UNDEFINED:
-    default:
+//		error("5");
+	default:
         ret = HAL_ERROR;
       break;
     }
@@ -2109,6 +2115,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
       if ( (tmpreg < (3 * huart->Init.BaudRate) ) ||
            (tmpreg > (4096 * huart->Init.BaudRate) ))
       {
+//		  error("!");
         ret = HAL_ERROR;
       }
       else
@@ -2139,7 +2146,8 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
         }
         else
         {
-          ret = HAL_ERROR;
+//			error("@");
+			ret = HAL_ERROR;
         }
       }  /*   if ( (tmpreg < (3 * huart->Init.BaudRate) ) || (tmpreg > (4096 * huart->Init.BaudRate) )) */
     } /* if (tmpreg != 0) */
@@ -2166,7 +2174,8 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
       break;
     case UART_CLOCKSOURCE_UNDEFINED:
     default:
-        ret = HAL_ERROR;
+//		error("#");
+		ret = HAL_ERROR;
       break;
     }
 
@@ -2195,7 +2204,8 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
       break;
     case UART_CLOCKSOURCE_UNDEFINED:
     default:
-        ret = HAL_ERROR;
+//		error("%");
+		ret = HAL_ERROR;
       break;
     }
   }

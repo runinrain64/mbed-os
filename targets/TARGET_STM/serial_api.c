@@ -63,9 +63,8 @@ void init_uart(serial_t *obj)
     } else {
         huart->Init.Mode = UART_MODE_TX_RX;
     }
-
     if (HAL_UART_Init(huart) != HAL_OK) {
-        error("Cannot initialize UART\n");
+		error("^^;; Cannot initialize UART\n");
     }
 }
 
